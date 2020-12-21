@@ -1,19 +1,31 @@
 
-package com.rstudio.data_mahasiswa;
+package rstudio.koneksi;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Koneksi {
-    String url = "jdbc:mysql://localhost/pbo";
-    public Connection getKoneksi(){
-        Connection conn = null;
+    private final String URL = "jdbc:mysql://localhost:3306/pbo?"+"serverTimezone=Asia/Makassar";
+    private final String USER = "root";
+    private final String PASS = "kadatahu";
+    
+    public Connection getConnection(){
+        Connection con;
+        
         try {
-            conn = DriverManager.getConnection(url,"root","kadatahu");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(URL, USER, PASS);
+            System.out.println("Berhasil");
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Error" + ex.toString());
         } catch (SQLException ex) {
+            System.err.println("Error" + ex.toString());
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return conn;
+        
+        return null;
     }
 }
